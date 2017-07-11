@@ -47,7 +47,6 @@
         <Button
             android:id="@+id/sale_button"
             style="@style/item_button_sale"
-            android:onClick="saleButtonHandler"
             android:text="@string/sale"/>
     </LinearLayout>
 

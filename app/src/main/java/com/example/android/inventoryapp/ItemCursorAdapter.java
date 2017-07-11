@@ -53,7 +53,7 @@ public class ItemCursorAdapter extends CursorAdapter {
 
     /**
      * This method binds the item data (in the current row pointed to by cursor) to the given
-     * list itetm layout. For example, the name for the current item can be set on the name TextView
+     * list item layout. For example, the name for the current item can be set on the name TextView
      * in the list item layout.
      *
      * @param view    Existing view, returned earlier by newView() method

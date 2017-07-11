@@ -102,7 +102,7 @@ public class CatalogActivity extends AppCompatActivity
      */
     private void insertDummyItems() {
 
-        Uri newUri = null;
+        Uri newUri;
 
         ContentValues values = new ContentValues();
 
@@ -172,7 +172,7 @@ public class CatalogActivity extends AppCompatActivity
 
         String sortOrder = ItemEntry._ID;
 
-        // Quthe database in background
+        // Query the database in background
         return new CursorLoader(this, // Parent activity context
                 ItemEntry.CONTENT_URI,   // Provider content URI to query
                 projection,             // Columns to include

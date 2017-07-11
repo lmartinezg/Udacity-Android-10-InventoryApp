@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.android.inventoryapp.R;
@@ -74,7 +75,7 @@ public class ItemProvider extends ContentProvider {
     }
 
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
+    public Cursor query(@NonNull Uri uri, String[] projection, String selection, String[] selectionArgs,
                         String sortOrder) {
         // Get readable database
         SQLiteDatabase database = mDbHelper.getReadableDatabase();
@@ -119,7 +120,7 @@ public class ItemProvider extends ContentProvider {
      * @return The new content URI
      */
     @Override
-    public Uri insert(Uri uri, ContentValues contentValues) {
+    public Uri insert(@NonNull Uri uri, ContentValues contentValues) {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case ITEMS:
@@ -141,7 +142,7 @@ public class ItemProvider extends ContentProvider {
         // If there is a name, check that it is not null nor blank
         if (values.containsKey(ItemEntry.COLUMN_ITEM_NAME)) {
             String name = values.getAsString(ItemEntry.COLUMN_ITEM_NAME);
-            if (name == null || (name != null && name.equals(""))) {
+            if (name == null || name.equals("")) {
                 throw new IllegalArgumentException(mResources.getString(R.string
                         .error_name_required));
             }
@@ -158,14 +159,6 @@ public class ItemProvider extends ContentProvider {
         if (price == null) {
             price = 0;
         }
-
-        // Supplier name, email address and phone number can be null
-        String supplierName = values.getAsString(ItemEntry.COLUMN_ITEM_SUPPLIER_NAME);
-        String supplierEmail = values.getAsString(ItemEntry.COLUMN_ITEM_SUPPLIER_EMAIL);
-        String supplierPhine = values.getAsString(ItemEntry.COLUMN_ITEM_SUPPLIER_PHONE);
-
-        // Image can be null
-        String image = values.getAsString(ItemEntry.COLUMN_ITEM_IMAGE_URI);
 
         // Get writeable database
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
@@ -192,15 +185,15 @@ public class ItemProvider extends ContentProvider {
      * @param contentValues The values
      * @param selection     Selection criteria
      * @param selectionArgs Selection arguments
-     * @return Numberof updated rows
+     * @return Number of updated rows
      */
     @Override
-    public int update(Uri uri, ContentValues contentValues, String selection,
+    public int update(@NonNull Uri uri, ContentValues contentValues, String selection,
                       String[] selectionArgs) {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case ITEMS:
-                // Update multiple rows, according to the selecion criteria
+                // Update multiple rows, according to the selection criteria
                 return updateItem(uri, contentValues, selection, selectionArgs);
             case ITEM_ID:
                 // Update a single row
@@ -220,14 +213,14 @@ public class ItemProvider extends ContentProvider {
      * @param values        The new values for the rows
      * @param selection     The selection criteria
      * @param selectionArgs The selection arguments
-     * @return Nuber of updated rows
+     * @return Number of updated rows
      */
     private int updateItem(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
 
         // If there is a name, check that it is not null nor blank
         if (values.containsKey(ItemEntry.COLUMN_ITEM_NAME)) {
             String name = values.getAsString(ItemEntry.COLUMN_ITEM_NAME);
-            if (name == null || (name != null && name.equals(""))) {
+            if (name == null || name.equals("")) {
                 throw new IllegalArgumentException(mResources.getString(R.string
                         .error_name_required));
             }
@@ -261,11 +254,11 @@ public class ItemProvider extends ContentProvider {
      * @return Number of deleted rows
      */
     @Override
-    public int delete(Uri uri, String selection, String[] selectionArgs) {
+    public int delete(@NonNull Uri uri, String selection, String[] selectionArgs) {
 
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
-        int deletedRows = 0;
+        int deletedRows;
 
         final int match = sUriMatcher.match(uri);
         switch (match) {
@@ -291,7 +284,7 @@ public class ItemProvider extends ContentProvider {
     }
 
     @Override
-    public String getType(Uri uri) {
+    public String getType(@NonNull Uri uri) {
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case ITEMS:
