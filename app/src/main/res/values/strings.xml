@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">InventoryApp</string>
+    <string name="error_unknown_URI_query">Cannot query unknown URI %s</string>
+    <string name="error_insertion_not_supported">Insertion is not supported for %s</string>
+    <string name="error_update_not_supported">Update is not supported for %s</string>
+    <string name="error_deletion_not_supported">Deletion is not supported for %s</string>
+    <string name="error_name_required">Item requires a name</string>
+    <string name="error_insert_failed">Failed to insert row for %s</string>
+    <string name="error_unknown_URI">Unknown URI %1$s " with match %2$d</string>
+    <string name="no_items_to_show">There are no items to show</string>
+    <string name="add_one_item">Add one item by tapping the button</string>
+
+    <string name="action_insert_dummy_data">Insert Dummy Data</string>
+    <string name="action_delete_all_entries">Delete All Entries</string>
+
+    <string name="toast_update_item_failed">Update Item failed</string>
+    <string name="toast_update_item_successful">Update Item successful</string>
+
+    <string name="action_save">Save</string>
+    <string name="action_delete">Delete</string>
+    <string name="update_failed">Update Item failed</string>
+    <string name="stock">Stock:</string>
+    <string name="price">Price:</string>
+    <string name="sale">Sale</string>
+
+    <string name="error_no_quantity_to_sell">There is no available quantity to sell</string>
+    <string name="error_quantity_update">Error updating the quantity</string>
+    <string name="quantity_update_successful">Quantity update successful</string>
+
+</resources>

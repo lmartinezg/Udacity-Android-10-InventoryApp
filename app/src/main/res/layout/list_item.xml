@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_margin">
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/item_tv_name"
+        tools:text="Item name placeholder adfk jadlkf jadfal faldf dflalsjdf kadjfkajsdfk jadfkjadshfk kfsjg haskjdfhkasdjf kasdjf kadsjfkladsjf kladsjfakdsfklasdj"/>
+
+    <LinearLayout
+        style="@style/item_ly_bottom">
+
+        <LinearLayout
+            style="@style/item_ly_stock_price">
+
+            <TextView
+                style="@style/item_tv_stock_price"
+                android:text="@string/stock"/>
+
+            <TextView
+                android:id="@+id/quantity"
+                style="@style/item_tv_stock_price"
+                android:layout_marginLeft="8dp"
+                tools:text="15"/>
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/item_ly_stock_price">
+
+            <TextView
+                style="@style/item_tv_stock_price"
+                android:text="@string/price"/>
+
+            <TextView
+                android:id="@+id/price"
+                style="@style/item_tv_stock_price"
+                android:layout_marginLeft="8dp"
+                tools:text="201"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/sale_button"
+            style="@style/item_button_sale"
+            android:onClick="saleButtonHandler"
+            android:text="@string/sale"/>
+    </LinearLayout>
+
+
+</LinearLayout>
