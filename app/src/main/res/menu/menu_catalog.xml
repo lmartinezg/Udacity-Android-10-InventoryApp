@@ -10,11 +10,11 @@
      See the License for the specific language governing permissions and
      limitations under the License.
 -->
-<!-- Options menu for the CatalogActivity -->
+<!-- Options menu for the MainActivity -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context=".CatalogActivity">
+      tools:context=".MainActivity">
 
     <item
         android:id="@+id/action_insert_dummy_data"

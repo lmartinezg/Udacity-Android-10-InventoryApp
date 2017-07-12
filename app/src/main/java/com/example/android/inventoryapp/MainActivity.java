@@ -23,10 +23,10 @@ import com.example.android.inventoryapp.data.ItemContract.ItemEntry;
 /**
  * Displays list of items that were entered and stored in the app.
  */
-public class CatalogActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static final String LOG_TAG = CatalogActivity.class.getName();
+    private static final String LOG_TAG = MainActivity.class.getName();
 
     private static final int ITEM_LOADER = 0;
 
@@ -35,15 +35,15 @@ public class CatalogActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_catalog);
+        setContentView(R.layout.activity_main);
 
 /*
-        // Setup FAB to open EditorActivity
+        // Setup FAB to open ItemDetailActivity
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
+                Intent intent = new Intent(MainActivity.this, ItemDetailActivity.class);
                 startActivity(intent);
             }
         });
@@ -63,21 +63,16 @@ public class CatalogActivity extends AppCompatActivity
         itemListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                // Create new intent to go to {@link EditorActivity}
-                Intent intent = new Intent(CatalogActivity.this, EditorActivity.class);
+                // Create new intent to go to {@link ItemDetailActivity}
+                Intent intent = new Intent(MainActivity.this, ItemDetailActivity.class);
 
-                // Form the content URI that represents the specific pet that was clicked on,
-                // by appending the "id" (passed as input to this method) onto the
-                // {@link ItemEntry#CONTENT_URI},
-                // For example, the URI would be "content://com.example.android.items/items/2"
-                // if the pet with ID 2 was clicked on.
-                Uri currentPetUri = ContentUris.withAppendedId(ItemEntry.CONTENT_URI, id);
+                Uri currentItemUri = ContentUris.withAppendedId(ItemEntry.CONTENT_URI, id);
 
                 // Set the URI in the data field of the Intent
-                intent.setData(currentPetUri);
-                Log.v(LOG_TAG, "URI: " + currentPetUri.toString());
+                intent.setData(currentItemUri);
+                Log.v(LOG_TAG, "URI: " + currentItemUri.toString());
 
-                // Launch the {@link EditorActivity} to display the data for the current pet.
+                // Launch the {@link ItemDetailActivity} to display the data for the current item.
                 startActivity(intent);
             }
         });
