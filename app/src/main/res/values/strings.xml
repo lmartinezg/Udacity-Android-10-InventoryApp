@@ -39,5 +39,8 @@
     <string name="mail_body">Please send additional %s</string>
     <string name="email_not_valid">Email address is not valid</string>
     <string name="phone_not_valid">Phone number is not valid</string>
+    <string name="image_not_found">Image not found in Gallery</string>
+    <string name="item_image_description">Item image</string>
+    <string name="error_gallery">Image could not be retrieved from Gallery</string>
 
 </resources>

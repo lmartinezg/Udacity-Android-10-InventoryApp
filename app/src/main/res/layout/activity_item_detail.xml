@@ -129,6 +129,13 @@
         android:layout_marginTop="16dp"
         android:contentDescription="@string/item_image"
         android:scaleType="centerInside"
-        android:src="@drawable/sampleimage"/>
+        android:src="@drawable/sampleimage"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/error_item_image"
+        style="@style/editor_value.contact"
+        android:text="@string/error_gallery"
+        android:visibility="visible"/>
 
 </LinearLayout>

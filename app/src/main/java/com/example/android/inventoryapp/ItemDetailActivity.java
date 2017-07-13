@@ -6,6 +6,8 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.ItemContract.ItemEntry;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import static com.example.android.inventoryapp.Utils.isValidEmail;
 import static com.example.android.inventoryapp.Utils.isValidPhone;
@@ -56,6 +61,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
     private ImageButton mIncreaseButton;
     private ImageButton mDecreaseButton;
     private ImageView mImageImageView;
+    private TextView mImageErrorTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,12 +86,12 @@ public class ItemDetailActivity extends AppCompatActivity implements
         mSupplierPhoneTextView = (TextView) findViewById(R.id.supplier_phone_tv);
         mSupplierMailTextView = (TextView) findViewById(R.id.supplier_mail_tv);
         mImageImageView = (ImageView) findViewById(R.id.item_image_iv);
+        mImageErrorTextView = (TextView) findViewById(R.id.error_item_image);
 
         setupDecreaseButtonListener();
         setupIncreaseListener();
         setupDialListener();
         setupMailListener();
-
     }
 
     // Listener for decrease button
@@ -272,6 +278,42 @@ public class ItemDetailActivity extends AppCompatActivity implements
             mSupplierMailTextView.setText(mSupplierMail);
 
             // TODO: Deal with the image. Retrieve it from the gallery
+// Test code fragment. To be removed if not used
+/*
+                    Uri uri = data.getData();
+        try {
+            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+            // Log.d(TAG, String.valueOf(bitmap));
+
+            ImageView imageView = (ImageView) findViewById(R.id.imageView);
+            imageView.setImageBitmap(bitmap);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+*/
+            /* Show a textview if no image provided */
+            if (mImageUriString == null) {
+                mImageErrorTextView.setText("No image selected fos this item");
+                mImageImageView.setVisibility(View.GONE);
+                mImageErrorTextView.setVisibility(View.VISIBLE);
+
+            } else {
+                try {
+                    final Uri imageUri = Uri.parse(mImageUriString);
+                    final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                    mImageImageView.setImageBitmap(selectedImage);
+                    mImageImageView.setContentDescription(getString(R.string.item_image_description));
+                    mImageImageView.setVisibility(View.VISIBLE);
+                    mImageErrorTextView.setVisibility(View.GONE);
+                } catch (FileNotFoundException e) {
+                    /* Show an error textview if failed to get image from gallery */
+                    mImageImageView.setVisibility(View.GONE);
+                    mImageErrorTextView.setVisibility(View.VISIBLE);
+                    // TODO: Remove printStackTrace
+                    e.printStackTrace();
+                }
+            }
 
             // Enable or disable the decrease and increase buttons depending on mQuantity
             mDecreaseButton.setEnabled(mQuantity > QUANTITY_LIMIT_MIN);
