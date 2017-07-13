@@ -1,6 +1,7 @@
 package com.example.android.inventoryapp;
 
 import android.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -8,11 +9,16 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.ItemContract.ItemEntry;
+
+import static com.example.android.inventoryapp.Utils.isValidEmail;
+import static com.example.android.inventoryapp.Utils.isValidPhone;
 
 public class ItemDetailActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -20,6 +26,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
     // Limits for increase and decrease buttons
     private static final int QUANTITY_LIMIT_MIN = 0;
     private static final int QUANTITY_LIMIT_MAX = 1000;
+    private static final int QUANTITY_BUTTONS_STEP = 1;
 
     /**
      * Identifier for the item data loader
@@ -31,12 +38,13 @@ public class ItemDetailActivity extends AppCompatActivity implements
      */
     private Uri mCurrentItemUri;
 
-    private String name;
-    private int price;
-    private int quantity;
-    private String supplier_name;
-    private String supplier_phone;
-    private String supplier_mail;
+    private String mItemName;
+    private int mPrice;
+    private int mQuantity;
+    private String mSupplierName;
+    private String mSupplierPhone;
+    private String mSupplierMail;
+    private String mImageUriString;
 
     // Variables for Views
     private TextView mNameTextView;
@@ -72,6 +80,132 @@ public class ItemDetailActivity extends AppCompatActivity implements
         mSupplierPhoneTextView = (TextView) findViewById(R.id.supplier_phone_tv);
         mSupplierMailTextView = (TextView) findViewById(R.id.supplier_mail_tv);
         mImageImageView = (ImageView) findViewById(R.id.item_image_iv);
+
+        setupDecreaseButtonListener();
+        setupIncreaseListener();
+        setupDialListener();
+        setupMailListener();
+
+    }
+
+    // Listener for decrease button
+    private void setupDecreaseButtonListener() {
+        mDecreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ContentValues values = new ContentValues();
+                values.put(ItemEntry.COLUMN_ITEM_QUANTITY, mQuantity - QUANTITY_BUTTONS_STEP);
+
+                // Update the row pointed by mCurrentItemUri
+                int rowsAffected = getContentResolver().update(mCurrentItemUri, values, null, null);
+                if (rowsAffected != 1) {
+                    // If no rows were affected , then there was an error with the update.
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.error_quantity_update),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    // Enable or disable the decrease button depending on quantity greater than zero
+                    mDecreaseButton.setEnabled(mQuantity > QUANTITY_LIMIT_MIN);
+                }
+            }
+        });
+    }
+
+    // Listener for increase button
+    private void setupIncreaseListener() {
+        mIncreaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ContentValues values = new ContentValues();
+                values.put(ItemEntry.COLUMN_ITEM_QUANTITY, mQuantity + QUANTITY_BUTTONS_STEP);
+
+                // Update the row pointed by mCurrentItemUri
+                int rowsAffected = getContentResolver().update(mCurrentItemUri, values, null, null);
+                if (rowsAffected != 1) {
+                    // If no rows were affected, then there was an error with the update.
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.error_quantity_update),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    // Enable or disable the increase button depending on quantity lower to max limit
+                    mDecreaseButton.setEnabled(mQuantity < QUANTITY_LIMIT_MAX);
+                }
+            }
+        });
+    }
+
+    // Listener for dial ListView
+    private void setupDialListener() {
+        mSupplierPhoneTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isValidPhone(mSupplierPhone)) {
+                    // Phone Number is not valid
+                    Toast.makeText(getApplicationContext(), R.string.phone_not_valid,
+                            Toast.LENGTH_SHORT).show();
+                } else {
+
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:" + mSupplierPhone));
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivity(intent);
+                    } else {
+                        // Could not start dial activity
+                        Toast.makeText(getApplicationContext(), R.string.could_not_dial,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+    }
+
+    // Listener for mail ListView
+    private void setupMailListener() {
+        mSupplierMailTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isValidEmail(mSupplierMail)) {
+                    // Mail address is not valid
+                    Toast.makeText(getApplicationContext(), R.string.email_not_valid,
+                            Toast.LENGTH_SHORT).show();
+                } else {
+
+                    Intent intent = new Intent(Intent.ACTION_SENDTO);
+
+                    /* This works */
+                    String uriText = "mailto:" + mSupplierMail +
+                            "?subject=" + Uri.encode(getString(R.string.order_to_supplier)) +
+                            "&body=" + String.format(getString(R.string.mail_body),
+                            mItemName);
+                    Uri uri = Uri.parse(uriText);
+                    intent.setData(uri);
+
+                    // TODO: Remove this code that does not work -----------
+                    /* But this fails */
+/*
+                    intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                    intent.setType("text/plain");
+                    String[] addresses = {mSupplierMail};
+                    intent.putExtra(Intent.EXTRA_EMAIL, new String[] {mSupplierMail} );
+                    intent.putExtra(Intent.EXTRA_SUBJECT, Uri.encode(getString(R.string
+                    .order_to_supplier)));
+                    intent.putExtra(Intent.EXTRA_TEXT, Uri.encode(String.format(getString(R.string
+                    .mail_body), mItemName)));
+*/
+                    // TODO: Remove this code that does not work -----------
+
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        startActivity(intent);
+                    } else {
+                        // Could not start dial activity
+                        Toast.makeText(getApplicationContext(), R.string.could_not_mail,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -121,28 +255,27 @@ public class ItemDetailActivity extends AppCompatActivity implements
                     .COLUMN_ITEM_IMAGE_URI);
 
             // Extract out the value from the Cursor for the given column index
-            String name = cursor.getString(nameColumnIndex);
-            int price = cursor.getInt(priceColumnIndex);
-            int quantity = cursor.getInt(quantityColumnIndex);
-            String supplierName = cursor.getString(supplierNameColumnIndex);
-            String supplierPhone = cursor.getString(supplierPhoneColumnIndex);
-            String supplierMail = cursor.getString(supplierMailColumnIndex);
-            String imageUri = cursor.getString(itemImageColumnIndex);
+            mItemName = cursor.getString(nameColumnIndex);
+            mPrice = cursor.getInt(priceColumnIndex);
+            mQuantity = cursor.getInt(quantityColumnIndex);
+            mSupplierName = cursor.getString(supplierNameColumnIndex);
+            mSupplierPhone = cursor.getString(supplierPhoneColumnIndex);
+            mSupplierMail = cursor.getString(supplierMailColumnIndex);
+            mImageUriString = cursor.getString(itemImageColumnIndex);
 
             // Update the views on the screen with the values from the database
-            mNameTextView.setText(name);
-            mPriceTextView.setText(String.valueOf(price));
-            mQuantityTextView.setText(String.valueOf(quantity));
-            mSupplierNameTextView.setText(supplierName);
-            mSupplierPhoneTextView.setText(supplierPhone);
-            mSupplierMailTextView.setText(supplierMail);
+            mNameTextView.setText(mItemName);
+            mPriceTextView.setText(String.valueOf(mPrice));
+            mQuantityTextView.setText(String.valueOf(mQuantity));
+            mSupplierNameTextView.setText(mSupplierName);
+            mSupplierPhoneTextView.setText(mSupplierPhone);
+            mSupplierMailTextView.setText(mSupplierMail);
 
-            // TODO: Deal view the image. Retrieve it from the gallery
+            // TODO: Deal with the image. Retrieve it from the gallery
 
-            // Enable or disable the decrease and increase buttons depending on quantity
-            mDecreaseButton.setEnabled(quantity > QUANTITY_LIMIT_MIN);
-            mIncreaseButton.setEnabled(quantity < QUANTITY_LIMIT_MAX);
-
+            // Enable or disable the decrease and increase buttons depending on mQuantity
+            mDecreaseButton.setEnabled(mQuantity > QUANTITY_LIMIT_MIN);
+            mIncreaseButton.setEnabled(mQuantity < QUANTITY_LIMIT_MAX);
         }
     }
 
@@ -152,6 +285,5 @@ public class ItemDetailActivity extends AppCompatActivity implements
 
         // There are no input fields
     }
-
 
 }

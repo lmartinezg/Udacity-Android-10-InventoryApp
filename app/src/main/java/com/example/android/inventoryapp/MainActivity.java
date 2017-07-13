@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity
         });
 
 
-        // Prepare the loader.  Either re-connect with an existing one,
+        // Prepare the loader. Either re-connect with an existing one,
         // or start a new one.
         getLoaderManager().initLoader(ITEM_LOADER, null, this);
     }
@@ -106,8 +106,8 @@ public class MainActivity extends AppCompatActivity
         values.put(ItemEntry.COLUMN_ITEM_QUANTITY, 0);
         values.put(ItemEntry.COLUMN_ITEM_PRICE, 10);
         values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_NAME, "dummy supplier name 1");
-        values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_EMAIL, "dummy supplier email 1");
-        values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_PHONE, "dummy supplier phone 1");
+        values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_EMAIL, "lmartinezg.gm@gmail.com");
+        values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_PHONE, "639032157");
         values.put(ItemEntry.COLUMN_ITEM_IMAGE_URI, "dummy supplier image URI 1");
         newUri = getContentResolver().insert(ItemEntry.CONTENT_URI, values);
         Log.v(LOG_TAG, "New row id " + ContentUris.parseId(newUri));

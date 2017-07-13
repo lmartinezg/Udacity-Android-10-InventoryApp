@@ -62,7 +62,7 @@
             <ImageButton
                 android:id="@+id/decrease_bt"
                 style="@style/up_down_buttons"
-                android:contentDescription="@string/increase"
+                android:contentDescription="@string/decrease"
                 android:src="@drawable/ic_arrow_drop_down_black_24dp"/>
 
             <TextView
@@ -76,7 +76,7 @@
             <ImageButton
                 android:id="@+id/increase_bt"
                 style="@style/up_down_buttons"
-                android:contentDescription="@string/decrease"
+                android:contentDescription="@string/increase"
                 android:src="@drawable/ic_arrow_drop_up_black_24dp"/>
 
         </LinearLayout>

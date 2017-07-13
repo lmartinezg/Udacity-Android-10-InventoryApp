@@ -27,6 +27,8 @@ public class ItemCursorAdapter extends CursorAdapter {
 
     public static final String LOG_TAG = ItemCursorAdapter.class.getSimpleName();
 
+    private static final int QUANTITY_LIMIT_MIN = 0;
+
     /**
      * Constructs a new {@link ItemCursorAdapter}.
      *
@@ -86,7 +88,7 @@ public class ItemCursorAdapter extends CursorAdapter {
         priceTextView.setText(String.valueOf(itemPrice));
 
         // Enable or disable the sale button depending on quantity greater than zero
-        saleButton.setEnabled(itemQuantity != 0);
+        saleButton.setEnabled(itemQuantity > QUANTITY_LIMIT_MIN);
 
         // Save the position for this item
         saleButton.setTag(cursor.getPosition());
