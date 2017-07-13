@@ -105,4 +105,10 @@
         <item name="android:minHeight">48dp</item>
     </style>
 
+    <style name="error_image" parent="editor_value.contact">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:visibility">visible</item>
+    </style>
+
 </resources>
