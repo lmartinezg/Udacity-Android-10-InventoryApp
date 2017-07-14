@@ -11,7 +11,7 @@
     <TextView
         android:id="@+id/name"
         style="@style/item_tv_name"
-        tools:text="Item name placeholder adfk jadlkf jadfal faldf dflalsjdf kadjfkajsdfk jadfkjadshfk kfsjg haskjdfhkasdjf kasdjf kadsjfkladsjf kladsjfakdsfklasdj"/>
+        tools:text="Item name placeholder"/>
 
     <LinearLayout
         style="@style/item_ly_bottom">
@@ -26,7 +26,7 @@
             <TextView
                 android:id="@+id/quantity"
                 style="@style/item_tv_stock_price"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="@dimen/list_item_left_margin"
                 tools:text="15"/>
         </LinearLayout>
 
@@ -40,7 +40,7 @@
             <TextView
                 android:id="@+id/price"
                 style="@style/item_tv_stock_price"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="@dimen/list_item_left_margin"
                 tools:text="201"/>
         </LinearLayout>
 

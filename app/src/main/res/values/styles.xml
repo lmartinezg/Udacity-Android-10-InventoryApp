@@ -41,9 +41,9 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_vertical</item>
-        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginLeft">@dimen/item_left_margin</item>
         <item name="android:layout_weight">2</item>
-        <item name="android:minHeight">48dp</item>
+        <item name="android:minHeight">@dimen/button_min_height</item>
         <item name="android:focusable">false</item>
     </style>
 
@@ -52,7 +52,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingTop">@dimen/empty_list_main_padding_top</item>
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
     </style>
 
@@ -62,7 +62,7 @@
         <item name="android:layout_below">@+id/empty_title_text</item>
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:fontFamily">sans-serif</item>
-        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingTop">@dimen/empty_list_add_padding_top</item>
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
         <item name="android:textColor">#A2AAB0</item>
     </style>
@@ -83,32 +83,78 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="editor_label.order">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginTop">@dimen/order_margin_top</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="editor_value">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">@dimen/editor_value_text_size</item>
     </style>
 
     <style name="editor_value.contact">
         <item name="android:layout_width">match_parent</item>
+        <item name="android:drawablePadding">@dimen/drawable_padding</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:drawablePadding">16dp</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingBottom">4dp</item>
-        <item name="android:paddingTop">4dp</item>
+        <item name="android:minHeight">@dimen/button_min_height</item>
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
     </style>
 
     <style name="up_down_buttons">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">48dp</item>
+        <item name="android:minHeight">@dimen/button_min_height</item>
     </style>
 
-    <style name="error_image" parent="editor_value.contact">
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/colorAccent</item>
+    <style name="image">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/image_height</item>
+        <item name="android:contentDescription">@string/item_image</item>
         <item name="android:visibility">visible</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+
+    <style name="error_image_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:visibility">visible</item>
+        <item name="android:layout_marginTop">@dimen/image_error_margins</item>
+        <item name="android:layout_marginBottom">@dimen/image_error_margins</item>
+        <item name="android:textAppearance">?android:textAppearanceMedium</item>
+    </style>
+
+    <style name="delete_record_button">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginBottom">@dimen/delete_button_margin_bottom</item>
+    </style>
+
+    <style name="divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/divider_height</item>
+        <item name="android:layout_marginTop">@dimen/divider_margins</item>
+        <item name="android:layout_marginBottom">@dimen/divider_margins</item>
+        <item name="android:background">@color/colorItemDivider</item>
+    </style>
+
+    <style name="quantity_value" parent="editor_value">
+        <item name="android:layout_marginLeft">@dimen/quantity_value_margins</item>
+        <item name="android:layout_marginRight">@dimen/quantity_value_margins</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="item_details">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 
 </resources>

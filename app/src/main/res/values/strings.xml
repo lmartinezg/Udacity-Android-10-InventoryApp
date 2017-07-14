@@ -13,12 +13,8 @@
     <string name="action_insert_dummy_data">Insert Dummy Data</string>
     <string name="action_delete_all_entries">Delete All Entries</string>
 
-    <string name="toast_update_item_failed">Update Item failed</string>
-    <string name="toast_update_item_successful">Update Item successful</string>
-
     <string name="action_save">Save</string>
     <string name="action_delete">Delete</string>
-    <string name="update_failed">Update Item failed</string>
     <string name="stock">Stock</string>
     <string name="price">Price</string>
     <string name="sale">Sale</string>
@@ -32,15 +28,22 @@
     <string name="item_image">Item image</string>
     <string name="name">Name</string>
     <string name="quantity">Quantity</string>
-    <string name="order_from_supplier">Order from the supplier</string>
+    <string name="order_from_supplier">Order from supplier</string>
     <string name="could_not_dial">Could not start Dial activity</string>
     <string name="order_to_supplier">Order to supplier</string>
     <string name="could_not_mail">Could not start Mail activity</string>
     <string name="mail_body">Please send additional %s</string>
     <string name="email_not_valid">Email address is not valid</string>
     <string name="phone_not_valid">Phone number is not valid</string>
-    <string name="image_not_found">Image not found in Gallery</string>
     <string name="item_image_description">Item image</string>
     <string name="error_gallery">Image could not be retrieved from Gallery</string>
+    <string name="delete_record">Delete record</string>
+    <string name="error_deleting_record">Error deleting this record</string>
+    <string name="delete_dialog_msg">Delete this item?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="editor_delete_item_successful">Item deleted</string>
+    <string name="editor_delete_item_failed">Error with deleting item</string>
+
 
 </resources>

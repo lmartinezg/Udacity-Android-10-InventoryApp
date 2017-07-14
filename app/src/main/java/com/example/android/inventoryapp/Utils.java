@@ -9,7 +9,7 @@ import android.text.TextUtils;
 public class Utils {
 
     /**
-     * Private default constructor to avoid instantiate this class
+     * Private default constructor to avoid instantiating this class
      */
     private Utils() {
     }

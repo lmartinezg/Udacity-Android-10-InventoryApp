@@ -1,8 +1,10 @@
 package com.example.android.inventoryapp;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -12,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +35,8 @@ public class ItemDetailActivity extends AppCompatActivity implements
     private static final int QUANTITY_LIMIT_MIN = 0;
     private static final int QUANTITY_LIMIT_MAX = 1000;
     private static final int QUANTITY_BUTTONS_STEP = 1;
+    private static final int OPTION_DECREASE = -1;
+    private static final int OPTION_INCREASE = 1;
 
     /**
      * Identifier for the item data loader
@@ -62,6 +67,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
     private ImageButton mDecreaseButton;
     private ImageView mImageImageView;
     private TextView mImageErrorTextView;
+    private Button mDeleteRecordButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,31 +93,84 @@ public class ItemDetailActivity extends AppCompatActivity implements
         mSupplierMailTextView = (TextView) findViewById(R.id.supplier_mail_tv);
         mImageImageView = (ImageView) findViewById(R.id.item_image_iv);
         mImageErrorTextView = (TextView) findViewById(R.id.error_item_image);
+        mDeleteRecordButton = (Button) findViewById(R.id.delete_record_bt);
 
-        setupDecreaseButtonListener();
+        setupDeleteRecordButtonListener();
+        setupDecreaseListener();
         setupIncreaseListener();
         setupDialListener();
         setupMailListener();
     }
 
-    // Listener for decrease button
-    private void setupDecreaseButtonListener() {
+    // Listener for delete button
+    private void setupDeleteRecordButtonListener() {
+        mDeleteRecordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDeleteConfirmationDialog();
+            }
+        });
+    }
+
+    private void showDeleteConfirmationDialog() {
+        // Create an AlertDialog.Builder and set the message, and click listener
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete the item.
+                int rowsDeleted = deleteItem();
+                // if one row was deleted, finish and return to the main activity
+                if (rowsDeleted == 1) {
+                    finish();
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                // and continue editing in this activity.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    /**
+     * Perform the deletion of the pet in the database.
+     */
+    private int deleteItem() {
+        int rowsAffected = getContentResolver().delete(mCurrentItemUri, null, null);
+
+        // Show a toast message depending on whether or not the delete was successful.
+        if (rowsAffected == 0) {
+            // If no rows were affected, then there was an error with the delete.
+            Toast.makeText(this, getString(R.string.editor_delete_item_failed),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            // Otherwise, the delete was successful and we can display a toast.
+            Toast.makeText(this, getString(R.string.editor_delete_item_successful),
+                    Toast.LENGTH_SHORT).show();
+        }
+        return rowsAffected;
+    }
+
+
+    // Listener for decrese button
+    private void setupDecreaseListener() {
         mDecreaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                ContentValues values = new ContentValues();
-                values.put(ItemEntry.COLUMN_ITEM_QUANTITY, mQuantity - QUANTITY_BUTTONS_STEP);
-
-                // Update the row pointed by mCurrentItemUri
-                int rowsAffected = getContentResolver().update(mCurrentItemUri, values, null, null);
-                if (rowsAffected != 1) {
-                    // If no rows were affected , then there was an error with the update.
-                    Toast.makeText(getApplicationContext(),
-                            getString(R.string.error_quantity_update),
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    // Enable or disable the decrease button depending on quantity greater than zero
+                int rowsAffected = changeQuantity(OPTION_DECREASE);
+                if (rowsAffected == 1) {
+                    // Enable or disable the decrease button depending on quantity greater to min
+                    // limit
                     mDecreaseButton.setEnabled(mQuantity > QUANTITY_LIMIT_MIN);
                 }
             }
@@ -124,22 +183,34 @@ public class ItemDetailActivity extends AppCompatActivity implements
             @Override
             public void onClick(View v) {
 
-                ContentValues values = new ContentValues();
-                values.put(ItemEntry.COLUMN_ITEM_QUANTITY, mQuantity + QUANTITY_BUTTONS_STEP);
-
-                // Update the row pointed by mCurrentItemUri
-                int rowsAffected = getContentResolver().update(mCurrentItemUri, values, null, null);
-                if (rowsAffected != 1) {
-                    // If no rows were affected, then there was an error with the update.
-                    Toast.makeText(getApplicationContext(),
-                            getString(R.string.error_quantity_update),
-                            Toast.LENGTH_SHORT).show();
-                } else {
+                int rowsAffected = changeQuantity(OPTION_INCREASE);
+                if (rowsAffected == 1) {
                     // Enable or disable the increase button depending on quantity lower to max limit
                     mDecreaseButton.setEnabled(mQuantity < QUANTITY_LIMIT_MAX);
                 }
             }
         });
+    }
+
+    // Process increase or decrease quantity
+    private int changeQuantity(int processOption) {
+
+        ContentValues values = new ContentValues();
+        values.put(ItemEntry.COLUMN_ITEM_QUANTITY, mQuantity + (QUANTITY_BUTTONS_STEP *
+                processOption));
+
+        // Update the row pointed by mCurrentItemUri
+        int rowsAffected = getContentResolver().update(mCurrentItemUri, values, null, null);
+        if (rowsAffected != 1) {
+            // If no rows were affected, then there was an error with the update.
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.error_quantity_update),
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            // Enable or disable the increase button depending on quantity lower to max limit
+            mDecreaseButton.setEnabled(mQuantity < QUANTITY_LIMIT_MAX);
+        }
+        return rowsAffected;
     }
 
     // Listener for dial ListView
@@ -188,20 +259,6 @@ public class ItemDetailActivity extends AppCompatActivity implements
                     Uri uri = Uri.parse(uriText);
                     intent.setData(uri);
 
-                    // TODO: Remove this code that does not work -----------
-                    /* But this fails */
-/*
-                    intent.setData(Uri.parse("mailto:")); // only email apps should handle this
-                    intent.setType("text/plain");
-                    String[] addresses = {mSupplierMail};
-                    intent.putExtra(Intent.EXTRA_EMAIL, new String[] {mSupplierMail} );
-                    intent.putExtra(Intent.EXTRA_SUBJECT, Uri.encode(getString(R.string
-                    .order_to_supplier)));
-                    intent.putExtra(Intent.EXTRA_TEXT, Uri.encode(String.format(getString(R.string
-                    .mail_body), mItemName)));
-*/
-                    // TODO: Remove this code that does not work -----------
-
                     if (intent.resolveActivity(getPackageManager()) != null) {
                         startActivity(intent);
                     } else {
@@ -209,6 +266,33 @@ public class ItemDetailActivity extends AppCompatActivity implements
                         Toast.makeText(getApplicationContext(), R.string.could_not_mail,
                                 Toast.LENGTH_SHORT).show();
                     }
+                }
+            }
+        });
+    }
+
+    // Listener for delete record button
+    private void setupDeleteListener() {
+        mDeleteRecordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mCurrentItemUri != null) {
+                    showDeleteConfirmationDialog();
+                    // Exit activity
+                    finish();
+                }
+
+                // Delete the row pointed by mCurrentItemUri
+                int rowsAffected = getContentResolver().delete(mCurrentItemUri, null, null);
+                if (rowsAffected != 1) {
+                    // If distinct to one, there was an error with the update.
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.error_deleting_record),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    // As the row was deleted, finish and go back to the items list
+                    finish();
                 }
             }
         });
@@ -278,25 +362,10 @@ public class ItemDetailActivity extends AppCompatActivity implements
             mSupplierMailTextView.setText(mSupplierMail);
 
             // TODO: Deal with the image. Retrieve it from the gallery
-// Test code fragment. To be removed if not used
-/*
-                    Uri uri = data.getData();
-        try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            // Log.d(TAG, String.valueOf(bitmap));
-
-            ImageView imageView = (ImageView) findViewById(R.id.imageView);
-            imageView.setImageBitmap(bitmap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-*/
             /* Show a textview if no image provided */
             if (mImageUriString == null) {
-                mImageErrorTextView.setText("No image selected fos this item");
                 mImageImageView.setVisibility(View.GONE);
                 mImageErrorTextView.setVisibility(View.VISIBLE);
-
             } else {
                 try {
                     final Uri imageUri = Uri.parse(mImageUriString);
@@ -327,5 +396,6 @@ public class ItemDetailActivity extends AppCompatActivity implements
 
         // There are no input fields
     }
+
 
 }
