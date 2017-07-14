@@ -8,7 +8,6 @@
     android:padding="@dimen/activity_margin"
     tools:context=".ItemDetailActivity">
 
-
     <LinearLayout
         style="@style/item_details">
 

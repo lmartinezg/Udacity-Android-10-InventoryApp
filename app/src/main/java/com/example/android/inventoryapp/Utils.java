@@ -8,6 +8,9 @@ import android.text.TextUtils;
 
 public class Utils {
 
+    // Constants used in multiple classes
+    static final int QUANTITY_LIMIT_MIN = 0;
+    static final int QUANTITY_LIMIT_MAX = 1000;
     /**
      * Private default constructor to avoid instantiating this class
      */

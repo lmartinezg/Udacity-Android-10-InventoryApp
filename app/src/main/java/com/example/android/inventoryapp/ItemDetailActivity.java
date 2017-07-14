@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -25,15 +26,15 @@ import com.example.android.inventoryapp.data.ItemContract.ItemEntry;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import static com.example.android.inventoryapp.Utils.QUANTITY_LIMIT_MAX;
+import static com.example.android.inventoryapp.Utils.QUANTITY_LIMIT_MIN;
 import static com.example.android.inventoryapp.Utils.isValidEmail;
 import static com.example.android.inventoryapp.Utils.isValidPhone;
 
 public class ItemDetailActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    // Limits for increase and decrease buttons
-    private static final int QUANTITY_LIMIT_MIN = 0;
-    private static final int QUANTITY_LIMIT_MAX = 1000;
+    // Constants for decrease and increase buttons processing
     private static final int QUANTITY_BUTTONS_STEP = 1;
     private static final int OPTION_DECREASE = -1;
     private static final int OPTION_INCREASE = 1;
@@ -161,7 +162,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
     }
 
 
-    // Listener for decrese button
+    // Listener for decrease button
     private void setupDecreaseListener() {
         mDecreaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,7 +187,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
                 int rowsAffected = changeQuantity(OPTION_INCREASE);
                 if (rowsAffected == 1) {
                     // Enable or disable the increase button depending on quantity lower to max limit
-                    mDecreaseButton.setEnabled(mQuantity < QUANTITY_LIMIT_MAX);
+                    mDecreaseButton.setEnabled(mQuantity < Utils.QUANTITY_LIMIT_MAX);
                 }
             }
         });
@@ -385,8 +386,22 @@ public class ItemDetailActivity extends AppCompatActivity implements
             }
 
             // Enable or disable the decrease and increase buttons depending on mQuantity
-            mDecreaseButton.setEnabled(mQuantity > QUANTITY_LIMIT_MIN);
-            mIncreaseButton.setEnabled(mQuantity < QUANTITY_LIMIT_MAX);
+            mDecreaseButton.setEnabled(mQuantity > Utils.QUANTITY_LIMIT_MIN);
+            mIncreaseButton.setEnabled(mQuantity < Utils.QUANTITY_LIMIT_MAX);
+
+            // Hide mail and phone views if there is no data for them
+            if (TextUtils.isEmpty(mSupplierMail)) {
+                mSupplierMailTextView.setVisibility(View.GONE);
+            } else {
+                mSupplierMailTextView.setVisibility(View.VISIBLE);
+            }
+
+            if (TextUtils.isEmpty(mSupplierPhone)) {
+                mSupplierPhoneTextView.setVisibility(View.GONE);
+            } else {
+                mSupplierPhoneTextView.setVisibility(View.VISIBLE);
+            }
+
         }
     }
 

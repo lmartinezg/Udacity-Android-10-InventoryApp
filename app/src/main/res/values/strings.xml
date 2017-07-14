@@ -30,7 +30,6 @@
     <string name="quantity">Quantity</string>
     <string name="order_from_supplier">Order from supplier</string>
     <string name="could_not_dial">Could not start Dial activity</string>
-    <string name="order_to_supplier">Order to supplier</string>
     <string name="could_not_mail">Could not start Mail activity</string>
     <string name="mail_body">Please send additional %s</string>
     <string name="email_not_valid">Email address is not valid</string>
@@ -44,6 +43,19 @@
     <string name="cancel">Cancel</string>
     <string name="editor_delete_item_successful">Item deleted</string>
     <string name="editor_delete_item_failed">Error with deleting item</string>
+    <string name="order_to_supplier">Order to supplier</string>
 
+    <string name="supplier_data">Supplier Data</string>
+    <string name="supplier_name">Name</string>
+    <string name="supplier_email">Email</string>
+    <string name="supplier_phone">Phone</string>
+    <string name="save">Save</string>
+    <string name="item_details_activity_title">Item details</string>
+    <string name="add_item_activity_title">Add new item</string>
+    <string name="error_no_item_name">Item Name is mandatory</string>
+    <string name="error_no_price">Price is mandatory</string>
+    <string name="error_no_supplier_name">Supplier Name is mandatory</string>
+    <string name="error_inserting_item">Error inserting new item</string>
+    <string name="new_record_inserted">New record inserted</string>
 
 </resources>
