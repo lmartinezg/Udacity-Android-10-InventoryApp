@@ -71,15 +71,6 @@
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/item_image_iv"
-            style="@style/image"/>
-
-        <TextView
-            android:id="@+id/error_item_image"
-            style="@style/error_image_text"
-            android:text="@string/no_image_provided"/>
-
         <TextView
             style="@style/divider"/>
 
@@ -109,6 +100,15 @@
 
         <TextView
             style="@style/divider"/>
+
+        <ImageView
+            android:id="@+id/item_image_iv"
+            style="@style/image"/>
+
+        <TextView
+            android:id="@+id/error_item_image"
+            style="@style/error_image_text"
+            android:text="@string/no_image_provided"/>
 
         <Button
             android:id="@+id/delete_record_bt"
