@@ -117,6 +117,9 @@ public class AddItemActivity extends AppCompatActivity {
                 mSupplierPhone = mSupplierPhoneEditText.getText().toString().trim();
                 mSupplierMail = mSupplierMailEditText.getText().toString().trim();
 
+                // Zero initial quantity for new items
+                mQuantity = 0;
+
                 // Avoid null pointer exception if no image selected
                 if (mImageUri != null) {
                     mImageUriString = mImageUri.toString();
@@ -148,6 +151,7 @@ public class AddItemActivity extends AppCompatActivity {
                 // Prepare values for the new row
                 ContentValues values = new ContentValues();
                 values.put(ItemEntry.COLUMN_ITEM_NAME, mItemName);
+                values.put(ItemEntry.COLUMN_ITEM_QUANTITY, mQuantity);
                 values.put(ItemEntry.COLUMN_ITEM_PRICE, mPrice);
                 values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_NAME, mSupplierName);
                 values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_PHONE, mSupplierPhone);

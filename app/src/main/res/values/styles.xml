@@ -104,6 +104,12 @@
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
     </style>
 
+    <style name="item_details_label">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/editor_value_text_size</item>
+    </style>
+
     <style name="up_down_buttons">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -165,6 +171,13 @@
         <item name="android:layout_weight">1</item>
         <item name="android:contentDescription">@string/pick_image_bt</item>
         <item name="android:minHeight">@dimen/button_min_height</item>
+    </style>
+
+    <style name="editor_value.edit_texts">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_marginLeft">@dimen/item_left_margin</item>
+        <item name="android:layout_weight">5</item>
+        <item name="android:inputType">text</item>
     </style>
 
 </resources>

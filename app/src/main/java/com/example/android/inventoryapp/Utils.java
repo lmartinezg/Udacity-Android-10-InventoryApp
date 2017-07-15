@@ -28,7 +28,8 @@ public class Utils {
      * @return if it looks valid or not
      */
     public static boolean isValidPhone(CharSequence target) {
-        return !TextUtils.isEmpty(target) && android.util.Patterns.PHONE.matcher(target).matches();
+        return !TextUtils.isEmpty(target) && android.util.Patterns.PHONE.matcher(target)
+                .matches();
     }
 
     /**

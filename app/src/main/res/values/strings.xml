@@ -29,12 +29,11 @@
     <string name="order_from_supplier">Order from supplier</string>
     <string name="could_not_dial">Could not start Dial activity</string>
     <string name="could_not_mail">Could not start Mail activity</string>
-    <string name="mail_body">Please send additional %s</string>
+    <string name="mail_body">Please send additional units of %s</string>
     <string name="email_not_valid">Email address is not valid</string>
     <string name="phone_not_valid">Phone number is not valid</string>
     <string name="no_image_provided">No image provided for this item</string>
     <string name="delete_record">Delete record</string>
-    <string name="error_deleting_record">Error deleting this record</string>
     <string name="delete_dialog_msg">Delete this item?</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
