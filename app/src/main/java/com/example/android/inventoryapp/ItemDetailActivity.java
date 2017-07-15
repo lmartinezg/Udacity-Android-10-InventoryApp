@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -23,6 +24,8 @@ import com.example.android.inventoryapp.data.ItemContract.ItemEntry;
 
 public class ItemDetailActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
+
+    public static final String LOG_TAG = ItemDetailActivity.class.getSimpleName();
 
     // Constants for decrease and increase buttons processing
     private static final int QUANTITY_BUTTONS_STEP = 1;
@@ -59,6 +62,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
     private ImageView mImageImageView;
     private TextView mImageErrorTextView;
     private Button mDeleteRecordButton;
+    private TextView mSupplierDataHeaderTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +89,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
         mImageImageView = (ImageView) findViewById(R.id.item_image_iv);
         mImageErrorTextView = (TextView) findViewById(R.id.error_item_image);
         mDeleteRecordButton = (Button) findViewById(R.id.delete_record_bt);
+        mSupplierDataHeaderTextView = (TextView) findViewById(R.id.supplier_data_header_tv);
 
         setupDeleteRecordButtonListener();
         setupDecreaseListener();
@@ -330,25 +335,10 @@ public class ItemDetailActivity extends AppCompatActivity implements
                 mImageImageView.setVisibility(View.GONE);
                 mImageErrorTextView.setVisibility(View.VISIBLE);
             } else {
+                Log.v(LOG_TAG, "Image URI String: " + mImageUriString);
                 mImageImageView.setImageURI(Uri.parse(mImageUriString));
                 mImageImageView.setVisibility(View.VISIBLE);
                 mImageErrorTextView.setVisibility(View.GONE);
-/*
-
-                try {
-                    final Uri imageUri = Uri.parse(mImageUriString);
-                    final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                    final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                    mImageImageView.setImageBitmap(selectedImage);
-                    mImageImageView.setContentDescription(getString(R.string.item_image_description));
-                    mImageImageView.setVisibility(View.VISIBLE);
-                    mImageErrorTextView.setVisibility(View.GONE);
-                } catch (FileNotFoundException e) {
-                    mImageImageView.setVisibility(View.GONE);
-                    mImageErrorTextView.setVisibility(View.VISIBLE);
-                    e.printStackTrace();
-                }
-*/
             }
 
             // Enable or disable the decrease and increase buttons depending on mQuantity
@@ -368,6 +358,12 @@ public class ItemDetailActivity extends AppCompatActivity implements
                 mSupplierPhoneTextView.setVisibility(View.VISIBLE);
             }
 
+            // Change supplier data header text
+            if (TextUtils.isEmpty(mSupplierPhone) && TextUtils.isEmpty(mSupplierMail)) {
+                mSupplierDataHeaderTextView.setText(R.string.supplier_data);
+            } else {
+                mSupplierDataHeaderTextView.setText(R.string.order_from_supplier);
+            }
         }
     }
 
@@ -377,6 +373,5 @@ public class ItemDetailActivity extends AppCompatActivity implements
 
         // There are no input fields
     }
-
 
 }

@@ -24,6 +24,7 @@
             <EditText
                 android:id="@+id/name_tv"
                 style="@style/editor_value.edit_texts"
+                android:hint="@string/enter_item_name"
                 android:inputType="text"
                 tools:text="Item Name Placeholder">
 
@@ -44,6 +45,7 @@
             <EditText
                 android:id="@+id/price_tv"
                 style="@style/editor_value.edit_texts"
+                android:hint="@string/enter_item_price"
                 android:inputType="number"
                 tools:text="Item Price Placeholder">
             </EditText>
@@ -70,6 +72,7 @@
             <EditText
                 android:id="@+id/supplier_name_tv"
                 style="@style/editor_value.edit_texts"
+                android:hint="@string/enter_supplier_name"
                 android:inputType="text"
                 tools:text="Supplier Name Placeholder"/>
 
@@ -87,6 +90,7 @@
             <EditText
                 android:id="@+id/supplier_mail_tv"
                 style="@style/editor_value.edit_texts"
+                android:hint="@string/enter_supplier_email"
                 android:inputType="textEmailAddress"
                 tools:text="Supplier Email Placeholder"/>
 
@@ -104,6 +108,7 @@
             <EditText
                 android:id="@+id/supplier_phone_tv"
                 style="@style/editor_value.edit_texts"
+                android:hint="@string/enter_supplier_phone_number"
                 android:inputType="phone"
                 tools:text="Supplier Phone Placeholder"/>
         </LinearLayout>

@@ -20,12 +20,12 @@
             style="@style/item_ly_stock_price">
 
             <TextView
-                style="@style/item_tv_stock_price"
-                android:text="@string/stock"/>
+                style="@style/editor_label"
+                android:text="@string/quantity"/>
 
             <TextView
                 android:id="@+id/quantity"
-                style="@style/item_tv_stock_price"
+                style="@style/editor_value"
                 android:layout_marginLeft="@dimen/list_item_left_margin"
                 tools:text="15"/>
         </LinearLayout>
@@ -34,12 +34,12 @@
             style="@style/item_ly_stock_price">
 
             <TextView
-                style="@style/item_tv_stock_price"
+                style="@style/editor_label"
                 android:text="@string/price"/>
 
             <TextView
                 android:id="@+id/price"
-                style="@style/item_tv_stock_price"
+                style="@style/editor_value"
                 android:layout_marginLeft="@dimen/list_item_left_margin"
                 tools:text="201"/>
         </LinearLayout>
@@ -49,6 +49,5 @@
             style="@style/item_button_sale"
             android:text="@string/sale"/>
     </LinearLayout>
-
 
 </LinearLayout>

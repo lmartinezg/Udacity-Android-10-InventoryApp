@@ -13,7 +13,6 @@
     <string name="action_insert_dummy_data">Insert Dummy Data</string>
     <string name="action_delete_all_entries">Delete All Entries</string>
 
-    <string name="stock">Stock</string>
     <string name="price">Price</string>
     <string name="sale">Sale</string>
 
@@ -25,8 +24,8 @@
     <string name="decrease">Decrease</string>
     <string name="item_image">Item image</string>
     <string name="name">Name</string>
-    <string name="quantity">Quantity</string>
-    <string name="order_from_supplier">Order from supplier</string>
+    <string name="quantity">Qty</string>
+    <string name="order_from_supplier">Tap to order from supplier</string>
     <string name="could_not_dial">Could not start Dial activity</string>
     <string name="could_not_mail">Could not start Mail activity</string>
     <string name="mail_body">Please send additional units of %s</string>
@@ -41,7 +40,6 @@
     <string name="editor_delete_item_failed">Error with deleting item</string>
     <string name="order_to_supplier">Order to supplier</string>
 
-    <string name="supplier_data">Supplier Data</string>
     <string name="supplier_name">Name</string>
     <string name="supplier_email">Email</string>
     <string name="supplier_phone">Phone</string>
@@ -55,5 +53,11 @@
     <string name="new_record_inserted">New record inserted</string>
     <string name="price_too_high">Price is greater than the maximum allowed (%d)</string>
     <string name="pick_image_bt">Pick an image for this item</string>
+    <string name="supplier_data">Supplier Data</string>
+    <string name="enter_item_name">Enter Item Name</string>
+    <string name="enter_item_price">Enter Item Price</string>
+    <string name="enter_supplier_name">Enter Supplier Name</string>
+    <string name="enter_supplier_email">Enter Supplier Email</string>
+    <string name="enter_supplier_phone_number">Enter Supplier Phone Number</string>
 
 </resources>

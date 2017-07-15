@@ -12,6 +12,7 @@
     <dimen name="empty_list_main_padding_top">16dp</dimen>
     <dimen name="empty_list_add_padding_top">8dp</dimen>
     <dimen name="order_margin_top">8dp</dimen>
+    <dimen name="editor_label_text_size">16sp</dimen>
     <dimen name="editor_value_text_size">20sp</dimen>
     <dimen name="image_height">160dp</dimen>
     <dimen name="image_error_margins">16dp</dimen>
@@ -22,6 +23,7 @@
     <dimen name="bottom_buttons_min_height">48dp</dimen>
     <dimen name="list_item_left_margin">8dp</dimen>
     <dimen name="drawable_padding">8dp</dimen>
+    <dimen name="supplier_name_min_height">32dp</dimen>
 
 </resources>
 

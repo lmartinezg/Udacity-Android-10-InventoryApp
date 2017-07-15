@@ -125,15 +125,8 @@ public class MainActivity extends AppCompatActivity
         // Row with null values for testing
         values.clear();
         values.put(ItemEntry.COLUMN_ITEM_NAME, "Item 3 (with null values)");
-        //values.put(ItemEntry.COLUMN_ITEM_QUANTITY, 9);
-        //values.put(ItemEntry.COLUMN_ITEM_PRICE, 30);
-        //values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_NAME, "dummy supplier name 3");
-        //values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_EMAIL, "dummy supplier email 3");
-        //values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_PHONE, "dummy supplier phone 3");
-        //values.put(ItemEntry.COLUMN_ITEM_IMAGE_URI, "dummy supplier image URI 3");
         newUri = getContentResolver().insert(ItemEntry.CONTENT_URI, values);
         Log.v(LOG_TAG, "New row id " + ContentUris.parseId(newUri));
-
     }
 
     @Override
@@ -198,7 +191,6 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "Delete All Entries successful",
                     Toast.LENGTH_SHORT).show();
         }
-
     }
 
 }

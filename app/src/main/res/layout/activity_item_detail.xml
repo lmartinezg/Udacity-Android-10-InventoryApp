@@ -38,7 +38,7 @@
                 android:id="@+id/price_tv"
                 style="@style/editor_value"
                 android:layout_marginLeft="@dimen/item_left_margin"
-                tools:text="150"/>
+                tools:text="999"/>
 
             <LinearLayout
                 style="@style/item_details"
@@ -75,7 +75,7 @@
             style="@style/divider"/>
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/supplier_data_header_tv"
             style="@style/editor_label.order"
             android:text="@string/order_from_supplier"/>
 
@@ -83,7 +83,7 @@
             android:id="@+id/supplier_name_tv"
             style="@style/editor_value.contact"
             android:gravity="center_vertical"
-            android:minHeight="32dp"
+            android:minHeight="@dimen/supplier_name_min_height"
             tools:text="Supplier Name Placeholder"/>
 
         <TextView
@@ -116,4 +116,5 @@
             android:text="@string/delete_record"/>
 
     </LinearLayout>
+
 </ScrollView>
