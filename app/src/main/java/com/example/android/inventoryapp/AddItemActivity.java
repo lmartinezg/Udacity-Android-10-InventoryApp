@@ -116,7 +116,13 @@ public class AddItemActivity extends AppCompatActivity {
                 mSupplierName = mSupplierNameEditText.getText().toString().trim();
                 mSupplierPhone = mSupplierPhoneEditText.getText().toString().trim();
                 mSupplierMail = mSupplierMailEditText.getText().toString().trim();
-                mImageUriString = mImageUri.toString();
+
+                // Avoid null pointer exception if no image selected
+                if (mImageUri != null) {
+                    mImageUriString = mImageUri.toString();
+                } else {
+                    mImageUriString = "";
+                }
 
                 // Check for too high number in price
                 if (mPrice > Utils.MAX_PRICE) {
