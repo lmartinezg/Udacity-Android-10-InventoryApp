@@ -1,115 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_margin"
-    tools:context=".ItemDetailActivity">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
     <LinearLayout
-        style="@style/item_details">
-
-        <TextView
-            style="@style/editor_label"
-            android:text="@string/name"/>
-
-        <TextView
-            android:id="@+id/name_tv"
-            style="@style/editor_value"
-            android:layout_marginLeft="@dimen/item_left_margin"
-            tools:text="Item name placeholder"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/item_details">
-
-        <TextView
-            style="@style/editor_label"
-            android:text="@string/price"/>
-
-        <TextView
-            android:id="@+id/price_tv"
-            style="@style/editor_value"
-            android:layout_marginLeft="@dimen/item_left_margin"
-            tools:text="150"/>
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_margin"
+        tools:context=".ItemDetailActivity">
 
         <LinearLayout
-            style="@style/item_details"
-            android:layout_width="wrap_content">
+            style="@style/item_details">
 
             <TextView
                 style="@style/editor_label"
-                android:layout_marginLeft="@dimen/quantity_left_margin"
-                android:layout_marginRight="@dimen/quantity_right_margin"
-                android:text="@string/quantity"/>
-
-            <ImageButton
-                android:id="@+id/decrease_bt"
-                style="@style/up_down_buttons"
-                android:contentDescription="@string/decrease"
-                android:src="@drawable/ic_arrow_drop_down_black_24dp"/>
+                android:text="@string/name"/>
 
             <TextView
-                android:id="@+id/quantity_tv"
-                style="@style/quantity_value"
-                tools:text="15"/>
-
-            <ImageButton
-                android:id="@+id/increase_bt"
-                style="@style/up_down_buttons"
-                android:contentDescription="@string/increase"
-                android:src="@drawable/ic_arrow_drop_up_black_24dp"/>
+                android:id="@+id/name_tv"
+                style="@style/editor_value"
+                android:layout_marginLeft="@dimen/item_left_margin"
+                tools:text="Item name placeholder"/>
 
         </LinearLayout>
 
+        <LinearLayout
+            style="@style/item_details">
+
+            <TextView
+                style="@style/editor_label"
+                android:text="@string/price"/>
+
+            <TextView
+                android:id="@+id/price_tv"
+                style="@style/editor_value"
+                android:layout_marginLeft="@dimen/item_left_margin"
+                tools:text="150"/>
+
+            <LinearLayout
+                style="@style/item_details"
+                android:layout_width="wrap_content">
+
+                <TextView
+                    style="@style/editor_label"
+                    android:layout_marginLeft="@dimen/quantity_left_margin"
+                    android:layout_marginRight="@dimen/quantity_right_margin"
+                    android:text="@string/quantity"/>
+
+                <ImageButton
+                    android:id="@+id/decrease_bt"
+                    style="@style/up_down_buttons"
+                    android:contentDescription="@string/decrease"
+                    android:src="@drawable/ic_arrow_drop_down_black_24dp"/>
+
+                <TextView
+                    android:id="@+id/quantity_tv"
+                    style="@style/quantity_value"
+                    tools:text="15"/>
+
+                <ImageButton
+                    android:id="@+id/increase_bt"
+                    style="@style/up_down_buttons"
+                    android:contentDescription="@string/increase"
+                    android:src="@drawable/ic_arrow_drop_up_black_24dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/item_image_iv"
+            style="@style/image"/>
+
+        <TextView
+            android:id="@+id/error_item_image"
+            style="@style/error_image_text"
+            android:text="@string/no_image_provided"/>
+
+        <TextView
+            style="@style/divider"/>
+
+        <TextView
+            android:id="@+id/textView"
+            style="@style/editor_label.order"
+            android:text="@string/order_from_supplier"/>
+
+        <TextView
+            android:id="@+id/supplier_name_tv"
+            style="@style/editor_value.contact"
+            android:gravity="center_vertical"
+            android:minHeight="32dp"
+            tools:text="Supplier Name Placeholder"/>
+
+        <TextView
+            android:id="@+id/supplier_mail_tv"
+            style="@style/editor_value.contact"
+            android:drawableLeft="@drawable/ic_email_black_24dp"
+            tools:text="dummy@testemail.com"/>
+
+        <TextView
+            android:id="@+id/supplier_phone_tv"
+            style="@style/editor_value.contact"
+            android:drawableLeft="@drawable/ic_phone_black_24dp"
+            tools:text="555-55-5555"/>
+
+        <TextView
+            style="@style/divider"/>
+
+        <Button
+            android:id="@+id/delete_record_bt"
+            style="@style/bottom_buttons"
+            android:text="@string/delete_record"/>
+
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/item_image_iv"
-        style="@style/image"
-        android:src="@drawable/sampleimage"/>
-
-    <TextView
-        android:id="@+id/error_item_image"
-        style="@style/error_image_text"
-        android:text="@string/error_gallery"/>
-
-    <TextView
-        style="@style/divider"/>
-
-    <TextView
-        android:id="@+id/textView"
-        style="@style/editor_label.order"
-        android:text="@string/order_from_supplier"/>
-
-    <TextView
-        android:id="@+id/supplier_name_tv"
-        style="@style/editor_value.contact"
-        android:gravity="center_vertical"
-        android:minHeight="32dp"
-        tools:text="Supplier Name Placeholder"/>
-
-    <TextView
-        android:id="@+id/supplier_mail_tv"
-        style="@style/editor_value.contact"
-        android:drawableLeft="@drawable/ic_email_black_24dp"
-        tools:text="dummy@testemail.com"/>
-
-    <TextView
-        android:id="@+id/supplier_phone_tv"
-        style="@style/editor_value.contact"
-        android:drawableLeft="@drawable/ic_phone_black_24dp"
-        tools:text="555-55-5555"/>
-
-    <TextView
-        style="@style/divider"/>
-
-    <Button
-        android:id="@+id/delete_record_bt"
-        style="@style/delete_record_button"
-        android:text="@string/delete_record"/>
-
-</LinearLayout>
+</ScrollView>

@@ -50,16 +50,10 @@
                 android:inputType="number"
                 tools:text="150"/>
 
-            <LinearLayout
-                style="@style/item_details"
-                android:layout_width="wrap_content">
-
-            </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -67,16 +61,11 @@
                 android:id="@+id/item_image_iv"
                 style="@style/image"
                 android:layout_width="0dp"
-                android:layout_weight="4"
-                android:src="@drawable/sampleimage"/>
+                android:layout_weight="4"/>
 
             <ImageButton
                 android:id="@+id/select_image_bt"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:minHeight="@dimen/button_min_height"
+                style="@style/pick_image_bt"
                 android:src="@drawable/ic_image_black_24dp"/>
 
         </LinearLayout>
@@ -105,8 +94,7 @@
                 android:layout_marginLeft="@dimen/item_left_margin"
                 android:layout_weight="5"
                 android:inputType="text"
-                tools:text="Item name placeholder"/>
-            tools:text="Supplier Name Placeholder"/>
+                tools:text="Supplier Name Placeholder"/>
 
         </LinearLayout>
 
@@ -154,9 +142,7 @@
 
         <Button
             android:id="@+id/save_bt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="@dimen/button_min_height"
+            style="@style/bottom_buttons"
             android:text="@string/save"/>
     </LinearLayout>
 

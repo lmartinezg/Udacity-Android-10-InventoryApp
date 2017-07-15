@@ -1,7 +1,9 @@
 package com.example.android.inventoryapp;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -16,16 +18,8 @@ import com.example.android.inventoryapp.data.ItemContract.ItemEntry;
 
 public class AddItemActivity extends AppCompatActivity {
 
-    /**
-     * Identifier for the item data loader
-     */
-    //private static final int EXISTING_ITEM_LOADER = 0;
-
-    /**
-     * Content URI for the selected item
-     */
-    private Uri mCurrentItemUri;
-
+    // Uri to local storage image
+    Uri mImageUri;
     private String mItemName;
     private int mPrice;
     private int mQuantity;
@@ -33,7 +27,6 @@ public class AddItemActivity extends AppCompatActivity {
     private String mSupplierPhone;
     private String mSupplierMail;
     private String mImageUriString;
-
     // Variables for Views
     private EditText mNameEditText;
     private EditText mPriceEditText;
@@ -49,12 +42,6 @@ public class AddItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
-/**
- // Initialize a loader to read the item data from the database
-
- // and display the current values in the editor
- getLoaderManager().initLoader(EXISTING_ITEM_LOADER, null, this);
- */
         // Find all relevant views that we will need to read user input from
         mNameEditText = (EditText) findViewById(R.id.name_tv);
         mPriceEditText = (EditText) findViewById(R.id.price_tv);
@@ -65,7 +52,40 @@ public class AddItemActivity extends AppCompatActivity {
         mSelectImage = (ImageButton) findViewById(R.id.select_image_bt);
         mSaveButton = (Button) findViewById(R.id.save_bt);
 
+        setupSelectImageListener();
         setupSaveListener();
+    }
+
+    // Select an image from the gallery
+    private void setupSelectImageListener() {
+        mSelectImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+
+                if (Build.VERSION.SDK_INT < 19) {
+                    intent = new Intent(Intent.ACTION_GET_CONTENT);
+                } else {
+                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                }
+                intent.setType("image/*");
+                startActivityForResult(intent, Utils.SELECT_PHOTO);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case Utils.SELECT_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    mImageUri = data.getData();
+                    mImageImageView.setImageURI(mImageUri);
+                }
+                break;
+        }
     }
 
     private void setupSaveListener() {
@@ -96,6 +116,28 @@ public class AddItemActivity extends AppCompatActivity {
                 mSupplierName = mSupplierNameEditText.getText().toString().trim();
                 mSupplierPhone = mSupplierPhoneEditText.getText().toString().trim();
                 mSupplierMail = mSupplierMailEditText.getText().toString().trim();
+                mImageUriString = mImageUri.toString();
+
+                // Check for too high number in price
+                if (mPrice > Utils.MAX_PRICE) {
+                    Toast.makeText(getApplicationContext(),
+                            String.format(getString(R.string.price_too_high), Utils.MAX_PRICE),
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                // Check for valid phone and email, if present
+                if (!TextUtils.isEmpty(mSupplierPhone) && !Utils.isValidPhone(mSupplierPhone)) {
+                    // Phone Number is not valid
+                    Toast.makeText(getApplicationContext(), R.string.phone_not_valid,
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (!TextUtils.isEmpty(mSupplierMail) && !Utils.isValidEmail(mSupplierMail)) {
+                    // Mail address is not valid
+                    Toast.makeText(getApplicationContext(), R.string.email_not_valid,
+                            Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 // Prepare values for the new row
                 ContentValues values = new ContentValues();
@@ -104,6 +146,7 @@ public class AddItemActivity extends AppCompatActivity {
                 values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_NAME, mSupplierName);
                 values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_PHONE, mSupplierPhone);
                 values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_EMAIL, mSupplierMail);
+                values.put(ItemEntry.COLUMN_ITEM_IMAGE_URI, mImageUriString);
 
                 Uri newUri = getContentResolver().insert(ItemEntry.CONTENT_URI, values);
 

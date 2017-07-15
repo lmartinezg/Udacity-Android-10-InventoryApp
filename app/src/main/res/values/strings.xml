@@ -13,8 +13,6 @@
     <string name="action_insert_dummy_data">Insert Dummy Data</string>
     <string name="action_delete_all_entries">Delete All Entries</string>
 
-    <string name="action_save">Save</string>
-    <string name="action_delete">Delete</string>
     <string name="stock">Stock</string>
     <string name="price">Price</string>
     <string name="sale">Sale</string>
@@ -34,8 +32,7 @@
     <string name="mail_body">Please send additional %s</string>
     <string name="email_not_valid">Email address is not valid</string>
     <string name="phone_not_valid">Phone number is not valid</string>
-    <string name="item_image_description">Item image</string>
-    <string name="error_gallery">Image could not be retrieved from Gallery</string>
+    <string name="no_image_provided">No image provided for this item</string>
     <string name="delete_record">Delete record</string>
     <string name="error_deleting_record">Error deleting this record</string>
     <string name="delete_dialog_msg">Delete this item?</string>
@@ -57,5 +54,7 @@
     <string name="error_no_supplier_name">Supplier Name is mandatory</string>
     <string name="error_inserting_item">Error inserting new item</string>
     <string name="new_record_inserted">New record inserted</string>
+    <string name="price_too_high">Price is greater than the maximum allowed (%d)</string>
+    <string name="pick_image_bt">Pick an image for this item</string>
 
 </resources>

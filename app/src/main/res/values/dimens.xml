@@ -18,7 +18,8 @@
     <dimen name="divider_height">1dp</dimen>
     <dimen name="divider_margins">4dp</dimen>
     <dimen name="quantity_value_margins">4dp</dimen>
-    <dimen name="delete_button_margin_bottom">8dp</dimen>
+    <dimen name="bottom_buttons_margin_bottom">8dp</dimen>
+    <dimen name="bottom_buttons_min_height">48dp</dimen>
     <dimen name="list_item_left_margin">8dp</dimen>
     <dimen name="drawable_padding">8dp</dimen>
 

@@ -129,11 +129,12 @@
         <item name="android:textAppearance">?android:textAppearanceMedium</item>
     </style>
 
-    <style name="delete_record_button">
+    <style name="bottom_buttons">
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:minHeight">@dimen/bottom_buttons_min_height</item>
         <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:layout_marginBottom">@dimen/delete_button_margin_bottom</item>
+        <item name="android:layout_marginBottom">@dimen/bottom_buttons_margin_bottom</item>
     </style>
 
     <style name="divider">
@@ -155,6 +156,15 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="pick_image_bt">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:contentDescription">@string/pick_image_bt</item>
+        <item name="android:minHeight">@dimen/button_min_height</item>
     </style>
 
 </resources>

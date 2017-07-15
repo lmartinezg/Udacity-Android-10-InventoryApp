@@ -11,6 +11,10 @@ public class Utils {
     // Constants used in multiple classes
     static final int QUANTITY_LIMIT_MIN = 0;
     static final int QUANTITY_LIMIT_MAX = 1000;
+    static final int MAX_PRICE = 5000;
+
+    static final int SELECT_PHOTO = 1;
+
     /**
      * Private default constructor to avoid instantiating this class
      */

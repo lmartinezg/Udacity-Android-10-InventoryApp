@@ -8,8 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,14 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.ItemContract.ItemEntry;
-
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
-import static com.example.android.inventoryapp.Utils.QUANTITY_LIMIT_MAX;
-import static com.example.android.inventoryapp.Utils.QUANTITY_LIMIT_MIN;
-import static com.example.android.inventoryapp.Utils.isValidEmail;
-import static com.example.android.inventoryapp.Utils.isValidPhone;
 
 public class ItemDetailActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -172,7 +162,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
                 if (rowsAffected == 1) {
                     // Enable or disable the decrease button depending on quantity greater to min
                     // limit
-                    mDecreaseButton.setEnabled(mQuantity > QUANTITY_LIMIT_MIN);
+                    mDecreaseButton.setEnabled(mQuantity > Utils.QUANTITY_LIMIT_MIN);
                 }
             }
         });
@@ -209,7 +199,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
                     Toast.LENGTH_SHORT).show();
         } else {
             // Enable or disable the increase button depending on quantity lower to max limit
-            mDecreaseButton.setEnabled(mQuantity < QUANTITY_LIMIT_MAX);
+            mDecreaseButton.setEnabled(mQuantity < Utils.QUANTITY_LIMIT_MAX);
         }
         return rowsAffected;
     }
@@ -219,7 +209,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
         mSupplierPhoneTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isValidPhone(mSupplierPhone)) {
+                if (!Utils.isValidPhone(mSupplierPhone)) {
                     // Phone Number is not valid
                     Toast.makeText(getApplicationContext(), R.string.phone_not_valid,
                             Toast.LENGTH_SHORT).show();
@@ -244,7 +234,7 @@ public class ItemDetailActivity extends AppCompatActivity implements
         mSupplierMailTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isValidEmail(mSupplierMail)) {
+                if (!Utils.isValidEmail(mSupplierMail)) {
                     // Mail address is not valid
                     Toast.makeText(getApplicationContext(), R.string.email_not_valid,
                             Toast.LENGTH_SHORT).show();
@@ -267,33 +257,6 @@ public class ItemDetailActivity extends AppCompatActivity implements
                         Toast.makeText(getApplicationContext(), R.string.could_not_mail,
                                 Toast.LENGTH_SHORT).show();
                     }
-                }
-            }
-        });
-    }
-
-    // Listener for delete record button
-    private void setupDeleteListener() {
-        mDeleteRecordButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (mCurrentItemUri != null) {
-                    showDeleteConfirmationDialog();
-                    // Exit activity
-                    finish();
-                }
-
-                // Delete the row pointed by mCurrentItemUri
-                int rowsAffected = getContentResolver().delete(mCurrentItemUri, null, null);
-                if (rowsAffected != 1) {
-                    // If distinct to one, there was an error with the update.
-                    Toast.makeText(getApplicationContext(),
-                            getString(R.string.error_deleting_record),
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    // As the row was deleted, finish and go back to the items list
-                    finish();
                 }
             }
         });
@@ -362,12 +325,16 @@ public class ItemDetailActivity extends AppCompatActivity implements
             mSupplierPhoneTextView.setText(mSupplierPhone);
             mSupplierMailTextView.setText(mSupplierMail);
 
-            // TODO: Deal with the image. Retrieve it from the gallery
             /* Show a textview if no image provided */
-            if (mImageUriString == null) {
+            if (TextUtils.isEmpty(mImageUriString)) {
                 mImageImageView.setVisibility(View.GONE);
                 mImageErrorTextView.setVisibility(View.VISIBLE);
             } else {
+                mImageImageView.setImageURI(Uri.parse(mImageUriString));
+                mImageImageView.setVisibility(View.VISIBLE);
+                mImageErrorTextView.setVisibility(View.GONE);
+/*
+
                 try {
                     final Uri imageUri = Uri.parse(mImageUriString);
                     final InputStream imageStream = getContentResolver().openInputStream(imageUri);
@@ -377,12 +344,11 @@ public class ItemDetailActivity extends AppCompatActivity implements
                     mImageImageView.setVisibility(View.VISIBLE);
                     mImageErrorTextView.setVisibility(View.GONE);
                 } catch (FileNotFoundException e) {
-                    /* Show an error textview if failed to get image from gallery */
                     mImageImageView.setVisibility(View.GONE);
                     mImageErrorTextView.setVisibility(View.VISIBLE);
-                    // TODO: Remove printStackTrace
                     e.printStackTrace();
                 }
+*/
             }
 
             // Enable or disable the decrease and increase buttons depending on mQuantity
