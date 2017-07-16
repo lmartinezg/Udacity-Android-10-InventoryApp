@@ -172,6 +172,11 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+
+        // Hide loading indicator
+        View loadingIndicator = findViewById(R.id.loading_indicator);
+        loadingIndicator.setVisibility(View.GONE);
+
         mCursorAdapter.swapCursor(data);
     }
 
