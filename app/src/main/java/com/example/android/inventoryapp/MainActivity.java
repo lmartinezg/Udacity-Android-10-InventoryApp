@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity
 
     private static final int ITEM_LOADER = 0;
 
-    ItemCursorAdapter mCursorAdapter;
+    private ItemCursorAdapter mCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

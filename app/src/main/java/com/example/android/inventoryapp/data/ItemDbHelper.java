@@ -12,7 +12,7 @@ import com.example.android.inventoryapp.data.ItemContract.ItemEntry;
  */
 public class ItemDbHelper extends SQLiteOpenHelper {
 
-    public static final String LOG_TAG = ItemDbHelper.class.getSimpleName();
+    private static final String LOG_TAG = ItemDbHelper.class.getSimpleName();
 
     /**
      * Name of the database file

@@ -23,7 +23,7 @@ public class ItemProvider extends ContentProvider {
     /**
      * Tag for the log messages
      */
-    public static final String LOG_TAG = ItemProvider.class.getSimpleName();
+    private static final String LOG_TAG = ItemProvider.class.getSimpleName();
 
     /**
      * URI matcher code for the content URI for the items table

@@ -48,9 +48,12 @@
     <string name="save">Save</string>
     <string name="item_details_activity_title">Item details</string>
     <string name="add_item_activity_title">Add new item</string>
-    <string name="error_no_item_name">Item Name is mandatory</string>
-    <string name="error_no_price">Price is mandatory</string>
-    <string name="error_no_supplier_name">Supplier Name is mandatory</string>
+    <string name="error_no_item_name">Item Name is required</string>
+    <string name="error_no_price">Price is required</string>
+    <string name="error_no_supplier_name">Supplier Name is required</string>
+    <string name="error_no_supplier_email">Supplier Email Address is required</string>
+    <string name="error_no_supplier_phone">Supplier Phone Number is required</string>
+    <string name="error_no_item_image">Item Image is required</string>
     <string name="error_inserting_item">Error inserting new item</string>
     <string name="new_record_inserted">New record inserted</string>
     <string name="price_too_high">Price is greater than the maximum allowed (%d)</string>

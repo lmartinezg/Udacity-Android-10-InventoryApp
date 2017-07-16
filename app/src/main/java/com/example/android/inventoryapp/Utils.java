@@ -6,7 +6,7 @@ import android.text.TextUtils;
  * Static helper methods
  */
 
-public class Utils {
+class Utils {
 
     // Constants used in multiple classes
     static final int QUANTITY_LIMIT_MIN = 0;
@@ -18,7 +18,7 @@ public class Utils {
     /**
      * Private default constructor to avoid instantiating this class
      */
-    private Utils() {
+    protected Utils() {
     }
 
     /**

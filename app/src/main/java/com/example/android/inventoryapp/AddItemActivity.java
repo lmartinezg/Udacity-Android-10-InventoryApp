@@ -16,10 +16,14 @@ import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.ItemContract.ItemEntry;
 
+import static android.text.TextUtils.isEmpty;
+
 public class AddItemActivity extends AppCompatActivity {
 
+    private static final String LOG_TAG = AddItemActivity.class.getName();
+
     // Uri to local storage image
-    Uri mImageUri;
+    private Uri mImageUri;
     private String mItemName;
     private int mPrice;
     private int mQuantity;
@@ -34,7 +38,7 @@ public class AddItemActivity extends AppCompatActivity {
     private EditText mSupplierPhoneEditText;
     private EditText mSupplierMailEditText;
     private ImageView mImageImageView;
-    private ImageButton mSelectImage;
+    private ImageButton mSelectImageButton;
     private Button mSaveButton;
 
     @Override
@@ -49,7 +53,7 @@ public class AddItemActivity extends AppCompatActivity {
         mSupplierPhoneEditText = (EditText) findViewById(R.id.supplier_phone_tv);
         mSupplierMailEditText = (EditText) findViewById(R.id.supplier_mail_tv);
         mImageImageView = (ImageView) findViewById(R.id.item_image_iv);
-        mSelectImage = (ImageButton) findViewById(R.id.select_image_bt);
+        mSelectImageButton = (ImageButton) findViewById(R.id.select_image_bt);
         mSaveButton = (Button) findViewById(R.id.save_bt);
 
         setupSelectImageListener();
@@ -58,7 +62,7 @@ public class AddItemActivity extends AppCompatActivity {
 
     // Select an image from the gallery
     private void setupSelectImageListener() {
-        mSelectImage.setOnClickListener(new View.OnClickListener() {
+        mSelectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent;
@@ -93,20 +97,40 @@ public class AddItemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                // Check for mandatory values
-                String toastMessage = null;
-                if (TextUtils.isEmpty(mNameEditText.getText().toString())) {
-                    toastMessage = getString(R.string.error_no_item_name);
+                // Check for required values
+
+                if (isEmpty(mNameEditText.getText().toString())) {
+                    showToast(getString(R.string.error_no_item_name));
+                    mNameEditText.requestFocus();
+                    return;
                 }
-                if (TextUtils.isEmpty(mPriceEditText.getText().toString())) {
-                    toastMessage = getString(R.string.error_no_price);
+                if (isEmpty(mPriceEditText.getText().toString())) {
+                    showToast(getString(R.string.error_no_price));
+                    mPriceEditText.requestFocus();
+                    return;
                 }
-                if (TextUtils.isEmpty(mSupplierNameEditText.getText().toString())) {
-                    toastMessage = getString(R.string.error_no_supplier_name);
+                if (isEmpty(mSupplierNameEditText.getText().toString())) {
+                    showToast(getString(R.string.error_no_supplier_name));
+                    mSupplierNameEditText.requestFocus();
+                    return;
                 }
-                // If error, show toast and return
-                if (!(TextUtils.isEmpty(toastMessage))) {
-                    Toast.makeText(getApplicationContext(), toastMessage, Toast.LENGTH_SHORT).show();
+                if (isEmpty(mSupplierMailEditText.getText().toString())) {
+                    showToast(getString(R.string.error_no_supplier_email));
+                    mSupplierMailEditText.requestFocus();
+                    return;
+                }
+                if (isEmpty(mSupplierPhoneEditText.getText().toString())) {
+                    showToast(getString(R.string.error_no_supplier_phone));
+                    mSupplierPhoneEditText.requestFocus();
+                    return;
+                }
+                String imageUriString = null;
+                if (mImageUri != null) {
+                    imageUriString = mImageUri.toString();
+                }
+                if (TextUtils.isEmpty(imageUriString)) {
+                    showToast(getString(R.string.error_no_item_image));
+                    mSelectImageButton.requestFocus();
                     return;
                 }
 
@@ -127,24 +151,25 @@ public class AddItemActivity extends AppCompatActivity {
                     mImageUriString = "";
                 }
 
+                // Checks for correct values
+
                 // Check for too high number in price
                 if (mPrice > Utils.MAX_PRICE) {
-                    Toast.makeText(getApplicationContext(),
-                            String.format(getString(R.string.price_too_high), Utils.MAX_PRICE),
-                            Toast.LENGTH_SHORT).show();
+                    showToast(String.format(getString(R.string.price_too_high), Utils.MAX_PRICE));
+                    mPriceEditText.requestFocus();
                     return;
                 }
                 // Check for valid phone and email, if present
-                if (!TextUtils.isEmpty(mSupplierPhone) && !Utils.isValidPhone(mSupplierPhone)) {
+                if (!isEmpty(mSupplierPhone) && !Utils.isValidPhone(mSupplierPhone)) {
                     // Phone Number is not valid
-                    Toast.makeText(getApplicationContext(), R.string.phone_not_valid,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(getString(R.string.phone_not_valid));
+                    mSupplierPhoneEditText.requestFocus();
                     return;
                 }
-                if (!TextUtils.isEmpty(mSupplierMail) && !Utils.isValidEmail(mSupplierMail)) {
+                if (!isEmpty(mSupplierMail) && !Utils.isValidEmail(mSupplierMail)) {
                     // Mail address is not valid
-                    Toast.makeText(getApplicationContext(), R.string.email_not_valid,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(getString(R.string.email_not_valid));
+                    mSupplierMailEditText.requestFocus();
                     return;
                 }
 
@@ -163,16 +188,25 @@ public class AddItemActivity extends AppCompatActivity {
                 // Show a toast message depending on whether or not the insertion was successful.
                 if (newUri == null) {
                     // If the new content URI is null, then there was an error with insertion.
-                    Toast.makeText(getApplicationContext(), R.string.error_inserting_item,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(getString(R.string.error_inserting_item));
                 } else {
                     // Otherwise, the insertion was successful and we can display a toast.
-                    Toast.makeText(getApplicationContext(), R.string.new_record_inserted,
-                            Toast.LENGTH_SHORT).show();
+                    showToast(getString(R.string.new_record_inserted));
                     // Finish activity and return to main activity
                     finish();
                 }
             }
         });
     }
+
+    /**
+     * Helper method to show a Toast
+     *
+     * @param toastMessage The message to show
+     */
+    private void showToast(String toastMessage) {
+        Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
+    }
+
 }
+

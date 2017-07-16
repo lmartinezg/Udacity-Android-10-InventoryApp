@@ -25,7 +25,7 @@ import com.example.android.inventoryapp.data.ItemContract.ItemEntry;
 public class ItemDetailActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
-    public static final String LOG_TAG = ItemDetailActivity.class.getSimpleName();
+    private static final String LOG_TAG = ItemDetailActivity.class.getSimpleName();
 
     // Constants for decrease and increase buttons processing
     private static final int QUANTITY_BUTTONS_STEP = 1;
