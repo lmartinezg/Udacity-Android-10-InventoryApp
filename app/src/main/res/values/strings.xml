@@ -34,7 +34,9 @@
     <string name="no_image_provided">No image provided for this item</string>
     <string name="delete_record">Delete record</string>
     <string name="delete_dialog_msg">Delete this item?</string>
+    <string name="delete_all_dialog_msg">Delete All Items?</string>
     <string name="delete">Delete</string>
+    <string name="delete_all">Delete All</string>
     <string name="cancel">Cancel</string>
     <string name="editor_delete_item_successful">Item deleted</string>
     <string name="editor_delete_item_failed">Error with deleting item</string>

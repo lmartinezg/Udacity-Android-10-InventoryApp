@@ -1,9 +1,11 @@
 package com.example.android.inventoryapp;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -178,11 +180,50 @@ public class MainActivity extends AppCompatActivity
         mCursorAdapter.swapCursor(null);
     }
 
+    /**
+     * Delete All Records menu option
+     * Show a dialog to confirm the deletion
+     */
     private void deleteAllItems() {
-        int rowsAffected = getContentResolver().delete(ItemEntry.CONTENT_URI, null, null);
+
+        // Create an AlertDialog.Builder and set the message, and click listener
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_all_dialog_msg);
+        builder.setPositiveButton(R.string.delete_all, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete the item.
+                int rowsDeleted = performDeleteAllItems();
+                // if rows were deleted, return
+                if (rowsDeleted == 1) {
+                    return;
+                }
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    /**
+     * Perform the deletion of all item records
+     *
+     * @return the number of deleted rows
+     */
+    private int performDeleteAllItems() {
+
+        int rowsDeleted = getContentResolver().delete(ItemEntry.CONTENT_URI, null, null);
 
         // Show a toast message depending on whether or not the delete was successful.
-        if (rowsAffected == 0) {
+        if (rowsDeleted == 0) {
             // If no rows were affected, then there was an error with the delete.
             Toast.makeText(this, "Delete All Entries failed",
                     Toast.LENGTH_SHORT).show();
@@ -191,6 +232,7 @@ public class MainActivity extends AppCompatActivity
             Toast.makeText(this, "Delete All Entries successful",
                     Toast.LENGTH_SHORT).show();
         }
+        return rowsDeleted;
     }
 
 }
